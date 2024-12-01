@@ -1,5 +1,6 @@
-const input = await Deno.readTextFile("./input");
-const lines = input.trim().split("\n").map((c) => c.split("   "));
+export function parseInput(input: string): string[][] {
+  return input.trim().split("\n").map((c) => c.split("   "));
+}
 
 // Part 1
 export function part1(input: string[][]): number {
@@ -23,6 +24,9 @@ export function part2(input: string[][]): number {
 }
 
 if (import.meta.main) {
+  const input = await Deno.readTextFile("./input");
+  const lines = parseInput(input);
+
   console.log("Part 1:", part1(lines));
   console.log("Part 2:", part2(lines));
 }

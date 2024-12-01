@@ -1,15 +1,13 @@
 import { assertEquals } from "@std/assert";
-import { part1, part2 } from "./main.ts";
+import { parseInput, part1, part2 } from "./main.ts";
 
-const testInput = [
-  "test line 1",
-  "test line 2",
-];
+const input = await Deno.readTextFile("./input_test");
+const testInput = parseInput(input);
 
 Deno.test("part1", () => {
   assertEquals(part1(testInput), 11);
 });
 
 Deno.test("part2", () => {
-  assertEquals(part2(testInput), 0);
+  assertEquals(part2(testInput), 31);
 });
