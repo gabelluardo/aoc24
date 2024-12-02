@@ -5,9 +5,9 @@ const input = await Deno.readTextFile("./input_test");
 const testInput = parseInput(input);
 
 Deno.test("part1", () => {
-  assertEquals(part1(testInput), 11);
+  assertEquals(part1(testInput), 0);
 });
 
 Deno.test("part2", () => {
-  assertEquals(part2(testInput), 31);
+  assertEquals(part2(testInput), 0);
 });
