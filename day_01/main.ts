@@ -1,11 +1,15 @@
-export function parseInput(input: string): string[][] {
-  return input.trim().split("\n").map((c) => c.split("   "));
+type InputType = number[][];
+
+export function parseInput(input: string): InputType {
+  return input.trim().split("\n").map((c) =>
+    c.split("   ").map((e) => Number(e))
+  );
 }
 
 // Part 1
-export function part1(input: string[][]): number {
-  const left = input.map((row) => Number(row.at(0))).toSorted();
-  const right = input.map((row) => Number(row.at(1))).toSorted();
+export function part1(input: InputType): number {
+  const left = input.map((row) => row[0]).toSorted((a, b) => a - b);
+  const right = input.map((row) => row[1]).toSorted((a, b) => a - b);
 
   return left.map((e, i) => Math.abs(e - right[i])).reduce(
     (acc, curr) => acc + curr,
@@ -13,9 +17,9 @@ export function part1(input: string[][]): number {
 }
 
 // Part 2
-export function part2(input: string[][]): number {
-  const left = input.map((row) => Number(row.at(0))).toSorted();
-  const right = input.map((row) => Number(row.at(1))).toSorted();
+export function part2(input: InputType): number {
+  const left = input.map((row) => row[0]).toSorted((a, b) => a - b);
+  const right = input.map((row) => row[1]).toSorted((a, b) => a - b);
 
   return left.map((l) => l * right.filter((r) => r === l).length).reduce((
     acc,
