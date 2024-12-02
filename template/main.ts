@@ -1,14 +1,16 @@
-export function parseInput(input: string): string[] {
+type InputType = any;
+
+export function parseInput(input: string): InputType {
   return [""];
 }
 
 // Part 1
-export function part1(input: string[]): number {
+export function part1(input: InputType): number {
   return 0;
 }
 
 // Part 2
-export function part2(input: string[]): number {
+export function part2(input: InputType): number {
   return 0;
 }
 
