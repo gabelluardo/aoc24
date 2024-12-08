@@ -1,4 +1,4 @@
-export function combinations<T>(arr: T[], length: number): T[][] {
+export function permutationWithRepetition<T>(arr: T[], length: number): T[][] {
     if (length === 0) {
         return [[]];
     }
@@ -8,7 +8,7 @@ export function combinations<T>(arr: T[], length: number): T[][] {
     }
 
     const result: T[][] = [];
-    const subCombinations = combinations(arr, length - 1);
+    const subCombinations = permutationWithRepetition(arr, length - 1);
 
     for (const item of arr) {
         for (const sub of subCombinations) {

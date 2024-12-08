@@ -1,4 +1,4 @@
-import { combinations } from "../utils/combinations.ts";
+import { permutationWithRepetition } from "../utils/permutations.ts";
 
 type InputType = Equation[];
 
@@ -35,7 +35,7 @@ export function part1(input: InputType): number {
   ];
 
   return input.filter((e) =>
-    combinations(operations, e.numbers.length - 1).some((ops) =>
+    permutationWithRepetition(operations, e.numbers.length - 1).some((ops) =>
       execOperations(e.numbers, ops) === e.test
     )
   ).reduce((acc, e) => acc + e.test, 0);
@@ -50,7 +50,7 @@ export function part2(input: InputType): number {
   ];
 
   return input.filter((e) =>
-    combinations(operations, e.numbers.length - 1).some((ops) =>
+    permutationWithRepetition(operations, e.numbers.length - 1).some((ops) =>
       execOperations(e.numbers, ops) === e.test
     )
   ).reduce((acc, e) => acc + e.test, 0);
