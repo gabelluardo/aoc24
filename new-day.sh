@@ -13,7 +13,7 @@ fi
 day_num=1
 # Find last created day
 if last_folder=$(find . -maxdepth 1 -type d -name "day_*" | sort -V | tail -n1 2>/dev/null); then
-    day_num=$(($(echo "$last_folder" | grep -o '[0-9][0-9]') + 1))
+    day_num=$((10#$(echo "$last_folder" | grep -o '[0-9][0-9]') + 1))
 fi
 
 # Verify day is valid
