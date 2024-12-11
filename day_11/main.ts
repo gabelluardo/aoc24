@@ -1,33 +1,32 @@
 type InputType = number[];
 
 function calculate(input: InputType, blink: number): number {
-  let stones = new Map<number, number>(input.map((n) => [n, 1]));
+  const stones = new Map<number, number>(input.map((n) => [n, 1]));
 
   for (let i = 0; i < blink; i++) {
-    const newStones = new Map<number, number>();
+    const entries = Array.from(stones.entries());
+    stones.clear();
 
-    for (const [num, count] of stones.entries()) {
+    for (const [num, count] of entries) {
       const digits = num.toString();
 
       if (num === 0) {
-        newStones.set(1, (newStones.get(1) || 0) + count);
+        stones.set(1, (stones.get(1) || 0) + count);
       } else if (digits.length % 2 === 0) {
         const left = Number(digits.slice(0, digits.length / 2));
         const right = Number(digits.slice(digits.length / 2));
 
-        newStones.set(left, (newStones.get(left) || 0) + count);
-        newStones.set(right, (newStones.get(right) || 0) + count);
+        stones.set(left, (stones.get(left) || 0) + count);
+        stones.set(right, (stones.get(right) || 0) + count);
       } else {
         const newNum = num * 2024;
 
-        newStones.set(newNum, (newStones.get(newNum) || 0) + count);
+        stones.set(newNum, (stones.get(newNum) || 0) + count);
       }
     }
-
-    stones = newStones;
   }
 
-  return stones.values().reduce((acc, n) => acc + n);
+  return stones.values().reduce((acc, n) => acc + n, 0);
 }
 
 export function parseInput(input: string): InputType {
