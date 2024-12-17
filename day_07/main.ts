@@ -1,4 +1,4 @@
-import { permutationsWithReplacement } from "../utils/itertools.ts";
+import { permutationsWithReplacement } from "@gabelluardo/itertools";
 type InputType = Equation[];
 
 type Equation = {

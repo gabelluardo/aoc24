@@ -1,4 +1,4 @@
-import { permutations } from "../utils/itertools.ts";
+import { permutations } from "@gabelluardo/itertools";
 
 type InputType = string[][];
 
