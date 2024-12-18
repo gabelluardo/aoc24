@@ -45,14 +45,7 @@ function _printMap(pos: Position, corrupted: Set<string>, len: number) {
   }
 }
 
-export function parseInput(input: string): InputType {
-  return input.trim().split("\n");
-}
-
-// Part 1
-export function part1(input: InputType, len = 71, bytes = 1024): number {
-  const corrupted = new Set(structuredClone(input).splice(0, bytes));
-
+function findPath(len: number, corrupted: Set<string>): number {
   const [start, end] = [[0, 0], [len - 1, len - 1]] as Position[];
 
   const visited = new Map<string, number>();
@@ -91,68 +84,32 @@ export function part1(input: InputType, len = 71, bytes = 1024): number {
   return -1;
 }
 
+export function parseInput(input: string): InputType {
+  return input.trim().split("\n");
+}
+
+// Part 1
+export function part1(input: InputType, len = 71, bytes = 1024): number {
+  return findPath(len, new Set(input.slice(0, bytes)));
+}
+
 // Part 2
 export function part2(input: InputType, len = 71, bytes = 1024): string {
-  const corrupted = new Set(structuredClone(input).splice(0, bytes));
+  let start = bytes;
+  let end = input.length - 1;
 
-  const [start, end] = [[0, 0], [len - 1, len - 1]] as Position[];
+  while (start < end) {
+    const idx = Math.floor((start + end) / 2);
+    const corrupted = new Set(input.slice(0, idx));
 
-  const visited = new Map<string, number>();
-  const pq = new PriorityQueue<StackItem & { path: Position[] }>();
-
-  const stackStart = {
-    pos: start,
-    sol: 0,
-    direction: directions[1],
-    path: [start],
-  };
-  pq.enqueue(stackStart, 0);
-
-  let idx = bytes;
-  corrupted.add(input[idx]);
-  while (!pq.isEmpty()) {
-    const current = pq.dequeue() as StackItem & { path: Position[] };
-    const { pos, sol, direction: { dx, dy }, path } = current;
-    const [x, y] = pos;
-
-    if (!isValid(pos, len) || corrupted.has(pos.toString())) {
-      continue;
-    }
-
-    if (equal(pos, end)) {
-      const strPathSet = new Set(path.map((s) => s.join(",")));
-
-      while (!strPathSet.has(input[idx])) {
-        corrupted.add(input[++idx]);
-      }
-
-      pq.clear();
-      visited.clear();
-      pq.enqueue(stackStart, 0);
-      continue;
-    }
-
-    const key = `${x},${y},${dx},${dy}`;
-    if (visited.has(key) && (visited.get(key) as number) <= sol) {
-      continue;
-    }
-    visited.set(key, sol);
-
-    for (const dir of directions) {
-      if (dir.dx === -dx && dir.dy === -dy) continue;
-
-      const newPos = [x + dir.dx, y + dir.dy] as Position;
-
-      pq.enqueue({
-        pos: newPos,
-        sol: sol + 1,
-        direction: dir,
-        path: [...path, newPos],
-      }, sol + 1);
+    if (findPath(len, corrupted) === -1) {
+      end = idx;
+    } else {
+      start = idx + 1;
     }
   }
 
-  return input[idx];
+  return input[start - 1];
 }
 
 if (import.meta.main) {
