@@ -13,4 +13,8 @@ export class PriorityQueue<T> {
     isEmpty(): boolean {
         return this.items.length === 0;
     }
+
+    clear(): undefined {
+        this.items = [];
+    }
 }
