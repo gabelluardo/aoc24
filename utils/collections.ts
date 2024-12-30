@@ -18,3 +18,33 @@ export class PriorityQueue<T> {
         this.items = [];
     }
 }
+
+export class CircularBuffer<T> {
+    private buffer: T[] = [];
+
+    constructor(private readonly capacity: number) {
+        this.buffer = new Array<T>(capacity);
+    }
+
+    push(element: T) {
+        if (this.buffer.length >= this.capacity) {
+            this.buffer.shift();
+        }
+
+        this.buffer.push(element);
+    }
+
+    isEmpty(): boolean {
+        return this.buffer.length === 0;
+    }
+
+    clear(): undefined {
+        this.buffer = [];
+    }
+
+    *[Symbol.iterator](): Iterator<T> {
+        for (let i = 0; i < this.buffer.length; i++) {
+            yield this.buffer[i];
+        }
+    }
+}

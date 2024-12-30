@@ -1,3 +1,5 @@
+import { CircularBuffer } from "../utils/collections.ts";
+
 type InputType = number[];
 
 type Prices = {
@@ -34,7 +36,7 @@ export function nextSecret(num: number): number {
 
 export function prices(initial: number, iter: number): Prices[] {
   const array = [];
-  const sequence = [];
+  const sequence = new CircularBuffer<number>(4);
 
   let secret = initial;
   let precVal = lastDigit(secret);
@@ -48,7 +50,7 @@ export function prices(initial: number, iter: number): Prices[] {
     array.push({
       value,
       variation,
-      sequence: sequence.slice(-4),
+      sequence: Array.from(sequence),
     });
 
     precVal = value;
